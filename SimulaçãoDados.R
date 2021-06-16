@@ -21,4 +21,5 @@ sim_logistic_data = function(sample_size = 25, beta_0 = 1, beta_1 = 3) {
   p = 1 / (1 + exp(-eta))
   y = rbinom(n = sample_size, size = 1, prob = p)
   data.frame(y, x)
-}v
+}
+
