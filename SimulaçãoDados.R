@@ -1,9 +1,9 @@
 #################################################################
 #####################  SImulação dos dados  #####################
 #################################################################
-
+library(tidyverse)
 library(caret)
-
+if(!require("coxed")) {install.packages("coxed"); library("coxed")}
 ### Criando um data frame para as variáveis de interesse
 n <-  1000
 proprietario <- sample(c(0,1), n, T)  # 0 = sim , 1 = Não
@@ -20,6 +20,10 @@ negociaçãoanteior <- sample(c(0,1), n, T)
 protestos <- rpois(n, 1)
 dividasexecutadas <- rpois(n, 1)
 dividasDA <- rpois(n, 1)
+regularidadeAcessorias <- sample(c(0,1), n, T) 
+BencajudREnajud <- sample(c(0,1), n, T) 
+prescricao <- sample(c(0,1), n, T) 
+precatResInd <- sample(c(0,1), n, T) 
 ### Para saldo devedor, vamos escolher uma faixa e calcular o máximo com base
 #nesse valor
 #max = 0.007 * 347092
@@ -34,68 +38,46 @@ dados= data.frame(
   scale(ScoreSerasa),
   Quitação ,
   Pagament ,
-  #QuantDIvidas <- rnorm(n)
   NaturezaDívida ,
   AtrasoAnterior  ,
   RespSolidaria ,
   negociaçãoanteior,
   scale(protestos) ,
   scale(dividasexecutadas),
-  scale(dividasDA) 
-  
+  scale(dividasDA),
+  scale(regularidadeAcessorias),
+  scale(BencajudREnajud),
+  prescricao,
+  precatResInd 
   
 )
 
 
 dummy <- dummyVars(" ~ .", data=dados)
 newdata <- data.frame(predict(dummy, newdata = dados)) 
+names(newdata)
+betas <-  c(0.2,0.25,0.2,0.4,1,-1,1,0.2,0.2,0.3, -0.2,-0.1,-0.2,-0.1,-0.2,-0.2,-0.1,1, -0.5, -0.3 , 0.5)
+
+eta = rowSums(mapply("*", newdata, betas))
+p = 1 / (1 + exp(-eta))
+y = rbinom(n = n, size = 1, prob = p)
 
 
-#### Tendo criado as variáveis, vamos fazer a simulação apra a regressão
-#logística.
-
-eta = (
-  2 + 
-  proprietario * 1 +
-  scale(TempoRelacionamento) * 2 +
-  scale(idade) * -1 +
-  scale(ScoreSerasa) * 4 +
-  #Quitação <- sample(c("integal","Parcelado"), n,T)
-  #Pagament <- sample(c("parcial", "sem pagamento"), n, T)
-  #QuantDIvidas <- rnorm(n)
-  #NaturezaDívida <- sample(c("GrandeDevedor","Fraude"), n, T)
-  AtrasoAnterior * 2 + 
-  RespSolidaria * -2 +
-  negociaçãoanteior * 2 +
-  scale(protestos) * 3 +
-  scale(dividasexecutadas) * 3 +
-  scale(dividasDA) * 3
-)
-#sim_logistic_data = function(sample_size = 25, beta_0 = 1, beta_1 = 3) {
- # x = rnorm(n = sample_size)
- # eta = beta_0 + beta_1 * x
-  p = 1 / (1 + exp(-eta))
-  y = rbinom(n = n, size = 1, prob = p)
-  #data.frame(y, x)
-#}
-
-  summary(as.factor(y))
-
-  
+summary(as.factor(y))
   
   ###################################################################
   ###################################################################
   
-  if(!require("coxed")) {install.packages("coxed"); library("coxed")}
-  library("coxed")
+  #if(!require("coxed")) {install.packages("coxed"); library("coxed")}
+  #library("coxed")
+  
   #Simulacao:
   set.seed(1)
-  simdata <- sim.survdata( T=180, num.data.frames=1, X = newdata)
+  simdata <- sim.survdata( T=180, num.data.frames=1, X = newdata, beta = betas)
   attributes(simdata)
-  head(simdata$data, 10)
-  head(simdata$xdata, 10)
-  head(simdata$baseline, 10)
-  simdata$betas
+ #head(simdata$data, 10)
+#head(simdata$xdata, 10)#head(simdata$baseline, 10)
+ #simdata$betas
   
 dados2<- simdata$data
 summary(dados2$y)
