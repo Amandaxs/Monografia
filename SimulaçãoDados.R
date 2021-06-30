@@ -12,7 +12,6 @@ idade <- sample(18:60,n,T)
 ScoreSerasa <- sample(0:1000,n,T)
 Quitação <- sample(c("integal","ParceladoExercicio", "ParceladoDA"), n,T)
 Pagament <- sample(c("parcial", "sem pagamento"), n, T)
-#QuantDIvidas <- rnorm(n)
 NaturezaDívida <- sample(c("GrandeDevedor","Fraude"), n, T)
 AtrasoAnterior  <-  sample(c(0,1), n, T)  # 0 = sim , 1 = Não
 RespSolidaria  <-  sample(c(0,1), n, T)
@@ -24,40 +23,39 @@ regularidadeAcessorias <- sample(c(0,1), n, T)
 BencajudREnajud <- sample(c(0,1), n, T) 
 prescricao <- sample(c(0,1), n, T) 
 precatResInd <- sample(c(0,1), n, T) 
-### Para saldo devedor, vamos escolher uma faixa e calcular o máximo com base
-#nesse valor
+saldodevedor <- runif(n,0,1)
 #max = 0.007 * 347092
 ## Pensar numa distribuição ou em algo pra com esse máximo
 
 #### colocando num dataFrame
 
 dados= data.frame(
-  proprietario ,
-  scale(TempoRelacionamento) ,
-  scale(idade) ,
-  scale(ScoreSerasa),
-  Quitação ,
-  Pagament ,
-  NaturezaDívida ,
-  AtrasoAnterior  ,
-  RespSolidaria ,
-  negociaçãoanteior,
-  scale(protestos) ,
-  scale(dividasexecutadas),
-  scale(dividasDA),
-  scale(regularidadeAcessorias),
-  scale(BencajudREnajud),
-  prescricao,
-  precatResInd 
+  proprietario , # 2
+  scale(TempoRelacionamento) , # 3
+  scale(idade) , #2
+  scale(ScoreSerasa),#4
+  Quitação ,# integra1 = 1, parcelado DA = -1, , parcelamento parcial = 1
+  Pagament ,# parcial = 1.5, -0.5
+  NaturezaDívida , # fraude = 3, -2
+  AtrasoAnterior  ,# -1
+  RespSolidaria ,# 0.5
+  negociaçãoanteior, # -1
+  scale(protestos) , #-1
+  scale(dividasexecutadas), #-2
+  scale(dividasDA), # -3
+  scale(regularidadeAcessorias),#-1
+  scale(BencajudREnajud),#-0.5
+  prescricao, # -2
+  precatResInd, #-1
+  saldodevedor #-2
   
 )
-
 
 dummy <- dummyVars(" ~ .", data=dados)
 newdata <- data.frame(predict(dummy, newdata = dados)) 
 names(newdata)
-betas <-  c(0.2,0.25,0.2,0.4,1,-1,1,0.2,0.2,0.3, -0.2,-0.1,-0.2,-0.1,-0.2,-0.2,-0.1,1, -0.5, -0.3 , 0.5)
-
+#betas <-  c(2,3,2,4,1,-1,1,0.2,0.2,0.3, -2,-0.1,-0.2,-0.1,-0.2,-0.2,-0.1,1, -0.5, -0.3 , 0.5)
+betas <-  c(2,3,2,4,1,-1,1,1.5,0.5,3,-2,-1,0.5,-1,-1,-2,-3,-1, -0.5, -2 ,-1,-2.5)
 eta = rowSums(mapply("*", newdata, betas))
 p = 1 / (1 + exp(-eta))
 y = rbinom(n = n, size = 1, prob = p)
@@ -82,3 +80,4 @@ summary(as.factor(y))
 dados2<- simdata$data
 summary(dados2$y)
 summary(dados2$failed)
+
