@@ -5,7 +5,7 @@ library(tidyverse)
 library(caret)
 if(!require("coxed")) {install.packages("coxed"); library("coxed")}
 ### Criando um data frame para as variáveis de interesse
-n <-  1000
+n <-  10000
 proprietario <- sample(c(0,1), n, T)  # 0 = sim , 1 = Não
 TempoRelacionamento <- sample(0:60,n,T)
 idade <- sample(18:60,n,T)
@@ -30,8 +30,8 @@ saldodevedor <- runif(n,0,1)
 #### colocando num dataFrame
 
 dados= data.frame(
-  proprietario , # 2
-  scale(TempoRelacionamento) , # 3
+  proprietario , #2
+  scale(TempoRelacionamento) , #3
   scale(idade) , #2
   scale(ScoreSerasa),#4
   Quitação ,# integra1 = 1, parcelado DA = -1, , parcelamento parcial = 1
@@ -59,6 +59,11 @@ betas <-  c(2,3,2,4,1,-1,1,1.5,0.5,3,-2,-1,0.5,-1,-1,-2,-3,-1, -0.5, -2 ,-1,-2.5
 eta = rowSums(mapply("*", newdata, betas))
 p = 1 / (1 + exp(-eta))
 y = rbinom(n = n, size = 1, prob = p)
+dados$y <- y
+## Mantendo somente os que pagaram 8% da dívida ao final do período
+dados = dados %>% filter( y ==1) %>% subset(select = -y)
+## Removendo o Y
+
 
 
 summary(as.factor(y))
