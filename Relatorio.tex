@@ -1,0 +1,103 @@
+% classe do documento
+\documentclass[12pt,a4paper]{article}
+
+
+% Pacotes
+\usepackage[utf8]{inputenc}  % aceitar acento e caracteres especiais
+\usepackage[portuges]{babel} % elementos em portugues
+%\usepackage[brazilian]{babel} % elementos em portugues
+\usepackage{graphicx} % pacote para figuras
+\usepackage{verbatim} % bloco de comentários
+\usepackage{hyperref} 
+\usepackage{natbib}
+%\usepackage{abntcite}
+\usepackage{indentfirst} % para as primeiras linhas ficarem com paragrafos
+\usepackage[left=3cm,top=3cm,right=2cm,bottom=2cm]{geometry}
+
+
+% Cabeçalho
+\title{Collection scoring via técnicas de Machine Learning} % titulo
+\author{Amanda Xavier} % autor
+
+% inicio do documento
+\usepackage{Sweave}
+\begin{document}
+\input{Relatorio-concordance}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\maketitle % comando para mostrar o título e autor
+
+\newpage
+
+
+\tableofcontents % indice
+\listoffigures % lista de figuras
+\listoftables % lista de tabelas
+
+\newpage
+
+\section{Introdução} % criando seção dentro do capítulo
+
+
+
+    No dia a dia dos consumidores é comum ouvir falar em crédito. O crédito trás aos consumidores uma ampliação de recursos financeiros, possibilitando tanto a aquisição de novos bens quanto o pagamento de dívidas e financiamentos.Esta ampliação de recursos em diversos setores é extremamente importante para a economia de um país, influenciando diretamento no PIB.
+    
+    As instituições financeiras tem grande interesse no ramo de concessão de crédito, devido ao alto retorno associado ao capital investido. No entanto a concessão de crédito também  está associada a diversos riscos. 
+    
+    Quando falamos em riscos, há diversos aspéctos a serem analisados. Tanto os relacionados á instituição que irá ceder o crédito quanto aos clientes que receberão.Do ponto de vista das instituições um dos principais riscos é o risco de inadimplência.
+    
+    Saber escolher bem para quem liberar crédito e o quanto liberar é essencial para que as instituições financeiras obtenham bons retornos dos créditos cedidos. Para que esta decisão seja tomada, existem diversos fatores a serem analisados e o grande volume de pessos e empresas buscando por crédito, torna inviável que estas decisões sejam tomadas de forma manual. O histórico das instituições com os clientes faz com que seja possivel entender e agrupar clientes em perfis semelhantes, e estes dados são utilizados na criação de modelos que preveem se um cliente será ou não uma boa escolha para a instituição que está analisando o crédito a ser cedido. Melores modelos de crédito se tornam diferenciais para as instituições, ajudando-sas a maximizar os lucros.
+    
+    O uso de modelos estatísticos trás mais agilidade e confiança nas decisões tomadas, pois levam em consideração o histórico e informações de outros clientes, ao invés de somente a visão subjetiva dos analistas. NO entanto, desde as mais simples as mais sofisticadas técnicas de análise de crédito trazem alguma incerteza e os clientes selecionados podem não pagar o valor combinado, ou pagar parcialmente.
+    
+    A partir de momento em que os clientes ficam inadimplentes, o novo desafio é traçar estratégias para recuperar os valores. Os devedores tem perfis diferentes e a forma de abordá-los na cobrança da dívida pode impactar no pagamento. Entender o comportamento destes devedores é essencial para que a estratégia adequada seja utilizada.Para alguns clientes, uma cobrança feita muito cedo pode fazer com que um cliente que iria pagar dívida deixe e pagar, para outros esta cobrança feita mais cedo poderia estimular o pagamento. A negativação de uma dívida, tras gastos para as instituições, e muitas vezes a instituição poderia evitar o gasto ao esperar mais um curto período para o pagamento.
+    
+    O desafio é saber qual estratégia tomar em cada cliente, e novamente, fazer de forma manual não seria a melhor estratégia, tanto pelo grande volume quanto pela visão subjetiva. Novamente vemos a nescessidade e a importância de criar modelos que ajudem a prever a probabilidade de um devedor quitar sua dívida ou parte dele e/ou em quanto tempo isso aconteceria. Com estes modelos e o estudo de como tratar cada perfil de devedor, as empresas podem maximizar a recuperação do crédito.
+    
+    Não há muito conteúdo disponível acerca de modelos de recuperação de crédito no Brasil, os dados são de difícil acesso, fazendo com o que o conhecimento dos modelos desenvolvidos fiquem restritos as empresas que os desenvolveram. A exploração destes modelos é importante e tem potencial para trazer grandes retornos as instituições que os utilizam, por isso, vimos a iportância de explorar e desenvolver as técnicas de recuperação através de modelos estatísticos e de aprendizado de máquina.
+    
+\section{Contextualização e Revisão teórica}
+ 
+ 
+\subsection{Collection Score}
+\subsection{Regressão Logística}
+
+Umas das técnicas mais conhecidas, quando estamos falando em classificação binária é a regressão logística.
+
+\subsection{Floresta aleátória}
+\subsection{SVM - Suport Verctor Machine}
+\subsection{Análise discriminate}
+
+
+\subsection{Avaliação de modelos de classificação}
+\subsection{Avaliação de modelos de tempo **** Melhorar esse nome}
+   
+
+\section{Simulação dos dados} % criando seção dentro do capítulo
+
+  Os dados utilizados para o ajuste de modelos de \emph{collection Score} costuma levar em consideração diversos tipos de informação relacionados á 
+
+
+
+\newpage % pular uma página
+
+
+\bibliographystyle{unsrt}  
+\bibliography{teste}
+
+
+\appendix{}
+
+\section{Anexo}
+
+
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%% COisas que posso precisar no documento
+
+
+%% PAra não identar alguma coisa:
+%%\noindent

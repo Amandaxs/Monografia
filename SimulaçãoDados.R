@@ -59,8 +59,10 @@ betas <-  c(2,3,2,4,1,-1,1,1.5,0.5,3,-2,-1,0.5,-1,-1,-2,-3,-1, -0.5, -2 ,-1,-2.5
 eta = rowSums(mapply("*", newdata, betas))
 p = 1 / (1 + exp(-eta))
 y = rbinom(n = n, size = 1, prob = p)
-dados$y <- y
-## Mantendo somente os que pagaram 8% da dívida ao final do período
+newdata$y <- y
+
+write.csv(newdata, "classification.csv")
+## Mantendo somente os que pagaram 80% da dívida ao final do período
 dados = dados %>% filter( y ==1) %>% subset(select = -y)
 ## Removendo o Y
 
