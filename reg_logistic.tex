@@ -1,0 +1,26 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Regressão logística %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Umas das técnicas mais conhecidas, quando estamos falando em classificação binária é a regressão logística.
+
+Seja Y nossa variável aleatória definida por:
+
+\enspace
+
+$
+Y = 
+\begin{cases}
+
+             1 & \mbox{se o devedor quitou pelo menos 80\% da dívida}\\
+
+             0 & \mbox{caso contrário.}
+
+       \end{cases}
+$
+
+\hspace{2cm}
+
+A relação entre a probabilidade de sucesso \bm{$p_i$} e as variáveis explicativas será dada através da função de ligação logística definida por:
+%%%%%
+$ logit(p_i) = log\{\frac{p_i}{1 - p_i}\} = \beta_0 + \beta_1 x_{1i} + ... + \beta_p x_{pi} $

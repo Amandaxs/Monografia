@@ -1,0 +1,57 @@
+Para a criação de modelos de collection score, são considerados dados referentes á diversos aspéctos relacionados ao perfil do cliente e ao seu comportamento e relacionamento com a instituição. No entanto estes dados são de difícil acesso, as empresas que detem este tipo de dado não os disponibilizam, tanto por questões de privacidade dos dados de seus clientes quanto por questões estratégicas.
+
+Para desenvolver os modelos deste trabalho, utilizamos dados simulados. A simulação foi feita pensando em uma base de inadimplência de IPTU. E de acordo com estudos e experiências referentes ao mercado de crédito e inadimplência levantamos as seguintes variáveis para serem simuladas:
+
+\begin{itemize}
+
+ \item \textbf{Proprietário}: Indicador se o devedor é dono do imóvel. (0,1)
+ \item \textbf{Tempo de relacionamento}: Tempo em meses que devedor tem relação com o imóvel em questão.(0 a 60)
+ \item \textbf{Idade}
+ \item \textbf{Proprietário}: Idade do devedor, limitada entre 18 e 60 anos
+ \item \textbf{Score Serasa}: Score Serasa do devedor. (0, 1000)
+ \item \textbf{Quitação}: Tipo de quitação da dívida (Integral, Parcelado, Parcelado com Dívida ativa)
+ \item \textbf{Pagamento}: Indicados se ja houve pagamento de parte da dívida (Parcial, Sem pagamento)
+ \item \textbf{Natureza da Dívidade}: Indicador se a dívida ocorreu devido a alguma fraude (Devedor, Fraude)
+ \item \textbf{Atraso anterior}: Indicador se houve algum atraso anterior de alguma outra dívida. (Sim, Não)
+ \item \textbf{Responsabilidade solidária}: Indicador das responsabilidades do imóvel estarem sob o devedor ou se houve algum tipo de responsabilidade conjunta ( Sim e Não)
+ \item \textbf{Protestos}: Quantidade de protestos atribuidos ao cliente ( 0,1, ..)
+ \item \textbf{Dívidas executadas}: Quantidade de dívidas cobradas na justiça (0,1, ...)
+ \item \textbf{Dívidas ativas}: Quantidade de dívidas ativas (0,1,...)
+  \item \textbf{Garantias e Penhores}: Indicados de comprometimento do cliente com alguma garantia ou penhor. ( Sim, Não)
+  \item \textbf{Prescrição}: Indicador de haver dividas anteriores que foram prescritas. ( Sim, Não)
+  \item \textbf{Proprietário, restituição ou indenização}: Indicador se há algum precatário, restituição ou indenização a ser recebida pelo devedor.
+  \item \textbf{negociaçãoanteior} Indicador de negociações anteriores para evitar dívidas.  (Sim, Não)
+  \item \textbf{regularidadeAcessorias} Indicador de falta de regularidade relacionadas as atividades econômicas de empresas das quais a pessoa é dona ou sócia. (Sim, Não)
+  \item \textbf{Saldo devedor}: percentual do total da dívida a ser quitado.(0 a 1)
+     
+\end{itemize}
+
+A simulação de cada variável foi feita de forma aleatória uniforme, com exeção das variáveis que indicavam quantidade de protestos e dívidas, que foram simuladas a partir da distribuição Poisson com média 1.
+
+Após a simulação das variáveis individualmente, foi feito o agrupamento delas em um data frame, neste ponto, as variáveis numéricas foram padronizadas para obedecerem a mesma escala. A escolha da padronização das variáveis numéricas foi feita pelo fato de que usualmente durante o ajuste dos modelos, as variáveis são padronizadas, então a padronização foi feita nesta etapa.
+
+Outro ponto abordado foi o encoding das variáveis categóricas, as variáveis dicotômicas foram tranformadas em uma coluna binárias, e as variáveis com mais de uma categoria foram espandidas em uma coluna dicotômica para cada categoria.
+
+Para simular se a dívida teve pelo menos 80\% de seu valor pago, utilizamos a função logística para estimar as probabilidades do valor ser pago. Os valores de beta são pesos que foram definidos com base em conhecimentos anteriores e estudos sobre o assunto para definir o impacto de cada variável no pagamento da dívida. Tendo calculado as probabilidades, utilizamos a função rbinom do software R, para simular os dados ponderando com as probabilidades calculadas.
+
+A distribuição da variável resposta simulada é mostrada a seguir:
+
+
+
+ \begin{center}
+ \textbf{Inserir aqui o gráfico}
+\end{center}
+
+
+O próximo ponto de interesse é simular o tempo nescesário para que a dívida seja paga. Para isso, foi feita a simulação para dados de sobrevivência, a partir das observações que foram definidas que pagariam parte da dívida. O período de tempo estipulado foi de 180 dias, portanto, simulamos a partir da função sim.survdata do pacote coxed do software R o tempo nescessário para que a dívida fosse paga em pelo menos 80\% de seu total. 
+
+A consideração foi a mesma para os pagamentos parcelados ou integrais, nos integrais, é considerado o tempo para o pagamento total e no parcelado é considerado o tempo em que é paga a parcela que atinge 80\% do valor da dívida.
+
+A distribuição do tempo simulado para pagamento é mostrada a seguir:
+
+\begin{center}
+ \textbf{Inserir aqui o gráfico}
+\end{center}
+
+
+Tendo sido feitas as simulações do banco de dados, foi iniciado o processo de ajuste e comparação de modelos.

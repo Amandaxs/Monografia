@@ -1,0 +1,7 @@
+@book{triola,
+  title={Introdu{\c{c}}{\~a}o {\`a} estat{\'\i}stica},
+  author={Triola, Mario F and others},
+  volume={9},
+  year={2005},
+  publisher={ltc Rio de Janeiro}
+}

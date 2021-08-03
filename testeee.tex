@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\usepackage{Sweave}
+\begin{document}
+\input{testeee-concordance}
+
+\RequirePackage{filecontents}
+\begin{filecontents*}{\jobname.bib}
+  author    = {Goossens, Michel and Mittelbach, Frank and 
+               Samarin, Alexander},
+  title     = {The LaTeX Companion},
+  edition   = {1},
+  publisher = {Addison-Wesley},
+  location  = {Reading, Mass.},
+  year      = {1994},
+}
+  title     = {The Restaurant at the End of the Universe},
+  author    = {Douglas Adams},
+  series    = {The Hitchhiker's Guide to the Galaxy},
+  publisher = {Pan Macmillan},
+  year      = {1980},
+}
+\end{filecontents*}
+
+
+\documentclass[12pt,a4paper]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+%\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+%\usepackage{float}
+\usepackage{mathtools}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+\title{Propuesta de Investigación\\Analisis de bifurcaciónes de Codimension- 2 en un Modelo de Desarrollo sostenible\vspace{5cm}\\}
+\author{Juan Pablo Muñoz Diaz\\}
+\date{\today}
+
+
+\begin{document}
+
+Text~\cite{adams} % citing one bib entry % <============================
+\nocite{*}   % all not cited bib entrys are shown in bibliography ...
+\bibliographystyle{unsrt} % <===========================================
+\bibliography{\jobname} % to use file created by filecontents ...
+
+\end{document}
+
+
+\end{document}

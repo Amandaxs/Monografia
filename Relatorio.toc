@@ -1,12 +1,13 @@
-\babel@toc {portuges}{}
-\contentsline {section}{\numberline {1}Introdução}{3}{section.1}%
-\contentsline {section}{\numberline {2}Contextualização e Revisão teórica}{4}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Collection Score}{4}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Regressão Logística}{4}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Floresta aleátória}{4}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}SVM - Suport Verctor Machine}{4}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Análise discriminate}{4}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Avaliação de modelos de classificação}{4}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Avaliação de modelos de tempo **** Melhorar esse nome}{4}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Simulação dos dados}{4}{section.3}%
-\contentsline {section}{\numberline {A}Anexo}{5}{appendix.A}%
+\babel@toc {brazilian}{}
+\contentsline {section}{\numberline {1}Introdução}{3}%
+\contentsline {section}{\numberline {2}Contextualização e Revisão teórica}{4}%
+\contentsline {subsection}{\numberline {2.1}Collection Score}{4}%
+\contentsline {subsection}{\numberline {2.2}Regressão Logística}{4}%
+\contentsline {subsection}{\numberline {2.3}Floresta aleátória}{4}%
+\contentsline {subsubsection}{\numberline {2.3.1}Árvores de decisão}{4}%
+\contentsline {subsubsection}{\numberline {2.3.2}Bagging}{5}%
+\contentsline {subsubsection}{\numberline {2.3.3}Floresta Aleatória}{6}%
+\contentsline {subsection}{\numberline {2.4}SVM - Suport Verctor Machine}{6}%
+\contentsline {subsection}{\numberline {2.5}Análise discriminate}{8}%
+\contentsline {subsection}{\numberline {2.6}Avaliação de modelos de classificação}{8}%
+\contentsline {section}{\numberline {3}Simulação e tratamento dos dados}{8}%

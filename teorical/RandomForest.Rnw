@@ -1,0 +1,56 @@
+O metodo de floresta aleatória também é amplamente utilizado para modelos de classificação , mas antes entender este tipo de modelo precisamos passar primeiro por outros conceitos importantes.
+
+
+\subsubsection{Árvores de decisão}
+
+Uma árvore de decisão é um método supervisionado e não paramétrico.
+
+Estes métodos tem uma representação gráfica baseada em árvores, e a ideia é agrupar indíviduos em grupos com características similares. Esse agrupamento é feito a partir de diversas repartições do banco de dados com base nas características das variáveis.
+
+
+Uma das formas mais simples de entender o processo de uma árvore de decisão é através de sua representação gráfica:
+
+
+\begin{figure}[ht]
+\centering
+\caption{Exemplicifação de uma árvore de decisão}
+  \includegraphics[width=8cm]{"images/dTreeExample.png"}
+  %\centering
+\caption*{Fonte: }%%"https://machine-learning-and-data-science-with-python.readthedocs.io/en/latest/assignment5_sup_ml.html"}
+  \label{dTree}
+\end{figure} 
+
+O exemplo na figura \ref{dTree}, ilustra uma árvore de dicisão utilizada para decidir com base em caractetísticas dadas, se o objeto estudado é um elefante. O processo começa olhando para todo o banco de dados e perguntando se é um ser vivo ou não. Caso negativo, ja é suficiente para afirmar que não é um elefante. No caso positivo, são feitas outras perguntas a fim de se ter mais certeza da respósta final. Desta forma a cada divisão temos subgrupos para os quais vamos tomando decisões ou fazendo novas perguntas até que se chegue numa decisão.
+
+
+Cada divisão feita pela árvore é chamada de partição, ou ramo, enquanto cada subamostra gerada é chamada de nó. O primeiro nó, também conhecido como Nó inicial contém todo o banco de dados, os nós seguintes são chamados de nós intermediários enquanto os nós que não tem nenhuma divisão posterior, ou seja, os nós em que temos uma decisão, são chamados de nó folha ou nó final. 
+
+Para partiçaõ dos nós, ocorrem divisões binárias baseadas  em medidas de impureza (Entropia, Gini, etc.), tais divisões, tem o objetivo de trazer subamostras cada vez mais parecidas em relação a variável que está sendo classificada. No entanto estas divisões podem ocorrer de forma extensa, trazendo árvores grandes e provocando \emph{ovefitting}, uma forma de limitar isso é criando algum critério de parada para a árvore. Diferentes critérios de parada podem ser utilizados de acordo com o objetivo e o problema abordado.
+
+
+
+\subsubsection{Bagging}
+
+O Bagging(Boootstrap Aggregation) é um classificador Ensemble.
+
+Os classificadores do tipo Ensamble tem o objetivo de trazer melhores predições através do ajuste de multiplos modelos e a combinação de seus resultados. 
+
+A ideia de combinar modelos serve para contornar limitações que podem vir de um modelo ajustado sozinho. No contexto de Ensamble, os modelos sozinhos são chamados de week learners ou modelos basicos. E estes modelos básicos que poderiam não performar muito bem sozinhos, são utilizados como base para a construção de modelos mais complexos com menor variância e/ou vicio do que cada modelo individual.
+
+Após pensar em combinar modelos, o próximo passo é pensar em como fazer essa combinação. Uma das formas de combinar estes modelos é através do método conhecido como bagging. 
+
+A ideia do bagging é ajustar modelos basicos que não dependam um do outro e depois combinar suas decisões.
+
+Os modelos são ajustados de forma independente e por diferentes conjuntos de dados. os diferentes conjuntos de dados são definidos através da técnica de reamostragem bootstrap, que busca uma nova amostra a partir da extração com reposição dos valores da amostra inicial.
+
+Após os diferentes modelos ajustados com as diferentes amostras, o resultado final será o resultado médio dos modelos. Nos casos de classifição, o valor mais frequente. Por exemplo, se treinassemos um modelo para prever se iria ou não chover no próximo dia, ao utilizar o bagging com 10 modelos, se 6 deles indicassem chuva, e 4 deles indicassem que não choveria, o resultado final seria o indicativo de chuva.
+
+
+\subsubsection{Floresta Aleatória}
+
+
+Por fim, chegamos nas Florestas aleatórias que são modelos bagging que usam árvores de decisão como modelos basicos.
+
+Dizendo de modo simples, o algoritmo de florestas aleatórias cria várias árvores de decisão e as combina para obter uma predição.
+
+O uso de florestas aleatórias ajuda a evitar alguns problemas que seriam observados nas árvores sozinhas, uma das maiores vantagens é que as  florestas dificultam a ocorrência de overfitting. Por outro lado, uma das desvantagens é que devido ao ajuste de multiplos modelos, o algoritmo pode ficar lento e dificultar a predição em tempo real.

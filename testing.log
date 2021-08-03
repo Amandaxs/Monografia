@@ -1,0 +1,178 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.7.15)  15 JUL 2021 09:44
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**testing.tex
+(./testing.tex
+LaTeX2e <2021-06-01> patch level 1
+L3 programming layer <2021-07-12>
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2021/02/12 v1.4n Standard LaTeX document class
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (c:/Program Files/R/R-4.1.0/share/texmf/tex/latex/Sweave.sty
+Package: Sweave 
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx
+.sty
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.s
+ty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics
+.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/grap
+hics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdft
+ex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen139
+\Gin@req@width=\dimen140
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb
+.sty
+Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count190
+\FV@InFile=\read2
+\FV@TabBox=\box50
+\c@FancyVerbLine=\count191
+\FV@StepNumber=\count192
+\FV@OutFile=\write3
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+) (c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/ae/ae.sty
+Package: ae 2001/02/12 1.3 Almost European Computer Modern
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+)))
+LaTeX Font Info:    Trying to load font information for T1+aer on input line 4.
+
+ (c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/ae/t1aer.fd
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backe
+nd-pdftex.def
+File: l3backend-pdftex.def 2021-07-12 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count193
+\l__pdf_internal_box=\box51
+) (./testing.aux)
+\openout1 = `testing.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epst
+opdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwa
+rerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kv
+definekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+))
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptio
+ns.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds
+.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvset
+keys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+))
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdft
+excmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+
+(c:/Users/DPCDTI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epsto
+pdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+)) (./testing-concordance.tex) (./testing.aux) ) 
+Here is how much of TeX's memory you used:
+ 2159 strings out of 480502
+ 34729 string characters out of 5897997
+ 319755 words of memory out of 5000000
+ 19834 multiletter control sequences out of 15000+600000
+ 405688 words of font info for 29 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 72i,1n,80p,212b,96s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+No pages of output.
+
+pdfTeX warning: pdflatex.exe: dangling objects discarded, no output file produc
+ed.
+
+PDF statistics:
+ 1 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 5 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,0 +1,42 @@
+O objetivo das maquinas de vetores de suporte é encontrar um hipeplano em um espaço n-dimensional que consiga separar os pontos de categorias distintas. Um exemplo visual da separação de duas categorias utilizando  hiperplanos é mostrado na figura \ref{fig: hiperplanes}
+
+\begin{figure}[ht]
+\centering
+\caption{Hiperplanos nos espaços 2D e 3D}
+  \includegraphics[width=8cm]{"images/hiperplaneExample.png"}
+  \centering
+\caption*{Fonte: }%%"https://towardsdatascience.com/support-vector-machine-introduction-to-machine-learning-algorithms-934a444fca47"
+\label{fig: hiperplanes}
+\end{figure} 
+
+No caso de SVM, que são classificadores binários, é usual utilizar  -1 e 1 para especificar as respóstas, tendo então um classificador da segunte forma:
+
+se $f(x) = \beta_0 + \beta_1x_1 + ... + \beta_px_p  < 0$ então Y = -1
+
+
+se $f(x) = \beta_0 + \beta_1x_1 + ... + \beta_px_p  > 0$ então Y = 1
+
+Na figura \ref{fig: hiperplanes} temos o exemplo de apenas um hiperplano separando cada cenário, mas é fácil ver que poderiam haver outros fazendo tal separação. No caso de haver masi de um hiperplano capaz de separar, o hiperplano ideal será o que maximiza a distância entre entre os pontos das duas classes. Esta distância é chamada de margem.
+
+As margens são definidas pelos pontos mais próximos do hiperplano, estes pontos são os chamados vetores de suporte, pontanto a margem é definida pela distância entre vetores de suporte de classes diferentes. Um exemplo visual é mostrado na figura \ref{fig: marginsSuportVerctorExample}.
+
+\begin{figure}[ht]
+\centering
+\caption{Exemplo de margem e vetores de suporte}
+  \includegraphics[width=6cm]{"images/marginsSuportVerctorExample.png"}
+  \centering
+\caption*{Fonte: }%%"https://www.datacamp.com/community/tutorials/svm-classification-scikit-learn-python"
+\label{fig: marginsSuportVerctorExample}
+\end{figure}
+
+Todos os exemplos mostrados até agora apresentam um cenário ideial, onde um hiperplano separa de forma linear as duas classes, no entanto é comum que não haja um hiperplano que separe as duas classes perfeitamente. Uma solução para isso é permitir que alguns pontos sejam classificados erroneamente, essa abordagem torna o algoritimomenos sensível á pequenas mudanças nos dados e pode aumentar seu poder preditivo.
+
+Outra forma de abordar o problema é obtendo separações mais complexas que hiperplanos, para isso podemos fazer transformações nas variáveis e utilizar svm nessas novas variáveis transofrmadas. No entanto essa transformação pode aumentar o número de variáveis na base e tornar os calculos mais complexos e pesados computacionalmente. Uma forma de abordar esse problema é utilziando o truque de Kernel quando queremos aplicar transformações em variáveis.
+
+Essencialmente, a ideia do truque de Kernel é tranformar as variáveis em uma forma mais geral e computacionalemnte atrativa, utilizando somente produtos internos entre todas as observaões para calcular os coeficientes, ao invés de precisar calcular todas as variáveis tranformadas. Utilizando este truque, o produto interno das variáveis transformadas poderá ser escrito através de uma função(kernel) do produto interno das variáveis originais, fazendo com que seja possível encontrar os coeficientes de uma tranformação, sem de fato a fazer.
+
+Quando utilizamos o truque de kernel, usualmente, pensamos no kernel que pode se aplicar ao invés de pensar primeiro na rtansofmrçaõ para depois verificar se pode ser utilizado o truque.
+
+Um dos kernels mais conhecidos é o kernel polinomial de grau d : $K(x_i,X_j) = (1 + <x_i,x_j>)^d$. Em cada problema diferentes kernels terão desempenhos melhores ou piores.
+
+O calculo dos hiperplanos utilizando um kernel terá o efeito de ter uma tranformação feita sem de fato a fazê-la.

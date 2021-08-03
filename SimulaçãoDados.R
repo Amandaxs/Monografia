@@ -63,7 +63,7 @@ newdata$y <- y
 
 write.csv(newdata, "classification.csv")
 ## Mantendo somente os que pagaram 80% da dívida ao final do período
-dados = dados %>% filter( y ==1) %>% subset(select = -y)
+newdata = newdata %>% filter( y ==1) %>% subset(select = -y)
 ## Removendo o Y
 
 

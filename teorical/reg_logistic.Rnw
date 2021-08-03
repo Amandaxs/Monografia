@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Regressão logística %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Quando falamos de regressão estamos interessados a fazer a predição de um valor Y com base no efeito que outras variáveis causam sobre ela. Para um Y binário, estamos interessados em estimar a probabilidade de um evento de interesse  ocorrer. Neste contexto uma técnica bem conhecida é a regressão logística, que é um caso particular dos modelos lineares generalizados.
+
+Podemos definir a regressão logística da seguinte forma:
+
+
+Seja Y nossa variável aleatória, tal que:
+
+\enspace
+
+$
+Y = 
+\begin{cases}
+
+             1 & \mbox{se o devedor quitou pelo menos 80\% da dívida}\\
+
+             0 & \mbox{caso contrário.}
+
+       \end{cases}
+$
+
+\hspace{2cm}
+
+No nosso contexto definimos como "sucesso" um devedor quitar pelo menos 80\% da dívida e a relação entre a probabilidade de sucesso \bm{$p_i$} e as variáveis explicativas será dada através da função de ligação logística definida por:
+%%%%%
+\begin{equation}\label{eq:logit}
+ logit(p_i) = log\{\frac{p_i}{1 - p_i}\} = \beta_0 + \beta_1 x_{1i} + ... + \beta_p x_{pi} 
+\end{equation}
+
+Que é equivalente á:
+
+\begin{equation}\label{eq:te}
+ p_i = \frac{e^{\beta_0 + \sum\limits_{j=1}^{n} \beta_j x_j}}
+ {1 - e^{\beta_0 + \sum\limits_{j=1}^{n} \beta_j x_j}} 
+\end{equation}
+
+
+Usualmente a estimação dos coeficientes é feita pelo método da máxima verossimilhança. 
+
+Como o resultado obtido é uma probabilidade, ou seja, uma valor entre 0 e 1. Pontanto, é nescessário traçar um limiar para divissão das classes. Usualmente, este limiar é traçado em 0.5, mas podem ser adotados outros métodos para definição deste valor.
+
+
