@@ -47,11 +47,49 @@ df_1_1_test <-  df_1_1[-intrain, ]
 
 
 
-#################################
+#######################################################################
+#######################################################################
+################# FUnção para salvar métricas
+
+
+resultados <- data.frame(
+      "Modelo" = character(0),
+      "Acurácia" = numeric(0),
+      "Pos pred" = numeric(0),
+      "Pos neg" = numeric(0),
+      "AUC" = numeric(0)
+)
+
+
+
+Salvametricas <- function( modelo, matconfusion , perform, resul = resultados){
+  #### CAulculando a AUC
+  (auc_ROCR <- performance(perform, measure = "auc"))
+  (auc_ROCR <- auc_ROCR@y.values[[1]])
+  ### linha ja existentes
+  n <- nrow(resul)
+  ### ERscrevendono data frame
+  resul[n+1,] <- c(
+    modelo,
+    round(matconfusion$overall['Accuracy'],3),
+    round(matconfusion$byClass['Pos Pred Value'],3),
+    round(matconfusion$byClass['Neg Pred Value'],3),
+    round(auc_ROCR,3)
+  )
+  return(resul)
+}
+
+
+
+
+
+#######################################################################
+#######################################################################
 
 
 ##### For logistic regression, there's no need of a cross validation
 mod <- glm(y~., family=binomial(link="logit"), data = df_0_1_train)
+
 #fit <- train(y~.,
 #             data = df_train,
   #           method="glm", 
@@ -66,14 +104,23 @@ conflog <- confusionMatrix(data = as.factor(as.numeric(pred > 0.5)),as.factor(df
 conflog
 
 
+rocpredlog <- prediction(predictions = pred, labels =df_0_1_test$y )
+roc_perflog <- performance(rocpredlog , "tpr" , "fpr")
+plot(roc_perflog,
+     colorize = TRUE,
+     #print.cutoffs.at= seq(0,1,0.05),
+     text.adj=c(-0.2,1.7))
+#(auc_ROCR <- performance(rocpredlog, measure = "auc"))
+#(auc_ROCR <- auc_ROCR@y.values[[1]])
+resultados <- Salvametricas("Regessão Logística",
+              matconfusion = conflog,
+              perform = rocpredlog)
 
-
+resultados
 ########################################################################
 ########################### Random Florest #############################
 ########################################################################
 
-
-library(randomForest)
 
 rf <- randomForest(y ~.,ntree=100, data = df_fat_train, importance = TRUE)
 
@@ -85,6 +132,21 @@ confarvore <- confusionMatrix(pred,df_fat_test$y)
 confarvore
 
 
+pd = predict(rf, newdata=subset (df_fat_test, select = -c(y)), type ="prob")[,2]
+
+rocpredarv<- prediction(predictions = pd, labels = df_fat_test$y )
+roc_perflog <- performance(rocpredarv, "tpr" , "fpr")
+plot(roc_perflog,
+     colorize = TRUE,
+     #print.cutoffs.at= seq(0,1,0.05),
+     text.adj=c(-0.2,1.7))
+
+
+resultados <- Salvametricas("Random Forest",
+                            matconfusion = confarvore,
+                            perform = rocpredarv)
+
+resultados
 ######################################################################
 ######################### SVM ########################################
 ######################################################################
@@ -97,6 +159,8 @@ predsvm1 <- predict(SVMbasico, newdata=subset (df_fat_test, select = -c(y)))
 confsvmbasico <- confusionMatrix(predsvm1,df_fat_test$y)
 confsvmbasico
 
+#predsvm1 <- predict(SVMbasico, newdata=subset (df_fat_test, select = -c(y)))
+#rocpredsvmlin<- prediction(predictions = predsvm1, labels = df_fat_test$y )
 
 
 ######## SVM utilizando um tune
@@ -192,6 +256,25 @@ confarvore
 confnaive
 
 
+## Acurácia
+## PRecisão -- pos Pred Value e Neg Pred Value
+## AUC 
+## Detection Rate
+(auc_ROCR <- auc_ROCR@y.values[[1]])
+
+roc_perflog 
+(auc_ROCR <- performance(rocpredlog, measure = "auc"))
+(auc_ROCR <- auc_ROCR@y.values[[1]])
+
+
+auc_ROCR@y.values[[1]]
+
+
+resultados <- data.frame("Acurácia" = numeric(0),
+                         "Pos pred" = numeric(0),
+                         "Pos neg" = numeric(0),
+                         "AUC" = numeric(0)
+                         )
 
 
 
@@ -199,7 +282,25 @@ confnaive
 
 
 
+Salvametricas <- function( matconfusion , perform, resul = resultados){
+  #### CAulculando a AUC
+  roc_perflog <- performance(perform , "tpr" , "fpr")
+  (auc_ROCR <- performance(rocpredlog, measure = "auc"))
+  (auc_ROCR <- auc_ROCR@y.values[[1]])
+  ### linha ja existentes
+  n <- nrow(resul)
+  ### ERscrevendono data frame
+  resul[n+1,] <- c(
+    conflog$overall['Accuracy'],
+    conflog$byClass['Pos Pred Value'],
+    conflog$byClass['Neg Pred Value'],
+    auc_ROCR
+  )
+  return(resul)
+}
 
+resultados = Salvametricas("Regessão Logística",matconfusion = conflog, perform = rocpredlog)
+resultados
 
 
 
