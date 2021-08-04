@@ -6,14 +6,14 @@ library(caret)
 if(!require("coxed")) {install.packages("coxed"); library("coxed")}
 ### Criando um data frame para as variáveis de interesse
 n <-  10000
-proprietario <- sample(c(0,1), n, T)  # 0 = sim , 1 = Não
+proprietario <- sample(c(0,1), n, T)  # 0 = Não , 1 = Sim
 TempoRelacionamento <- sample(0:60,n,T)
 idade <- sample(18:60,n,T)
 ScoreSerasa <- sample(0:1000,n,T)
 Quitação <- sample(c("integal","ParceladoExercicio", "ParceladoDA"), n,T)
 Pagament <- sample(c("parcial", "sem pagamento"), n, T)
 NaturezaDívida <- sample(c("GrandeDevedor","Fraude"), n, T)
-AtrasoAnterior  <-  sample(c(0,1), n, T)  # 0 = sim , 1 = Não
+AtrasoAnterior  <-  sample(c(0,1), n, T)  # 0 = não , 1 = sim
 RespSolidaria  <-  sample(c(0,1), n, T)
 negociaçãoanteior <- sample(c(0,1), n, T)
 protestos <- rpois(n, 1)
@@ -60,6 +60,8 @@ eta = rowSums(mapply("*", newdata, betas))
 p = 1 / (1 + exp(-eta))
 y = rbinom(n = n, size = 1, prob = p)
 newdata$y <- y
+
+### 0 =mau pagador  e 1 = bompacador
 
 write.csv(newdata, "classification.csv")
 ## Mantendo somente os que pagaram 80% da dívida ao final do período
