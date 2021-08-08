@@ -7,6 +7,15 @@ library(randomForest)
 library(ROCR)
 library(e1071)
 library(naivebayes)
+############
+library(lattice)
+library(latticeExtra)
+library(MASS)
+library(ellipse)
+library(mvtnorm)
+
+
+
 df <- read.csv("classification.csv")
 df$y %>% as.factor %>% summary  ## The classes are balanced
 
@@ -137,9 +146,9 @@ pd = predict(rf, newdata=subset (df_fat_test, select = -c(y)), type ="prob")[,2]
 rocpredarv<- prediction(predictions = pd, labels = df_fat_test$y )
 roc_perflog <- performance(rocpredarv, "tpr" , "fpr")
 plot(roc_perflog,
-     colorize = TRUE,
+     colorize = TRUE
      #print.cutoffs.at= seq(0,1,0.05),
-     text.adj=c(-0.2,1.7))
+    )
 
 
 resultados <- Salvametricas("Random Forest",
@@ -152,7 +161,7 @@ resultados
 ######################################################################
 
 ########## SVM básico sem nenhum kernel 
-SVMbasico <- svm(y ~., data = df_fat_train )
+SVMbasico <- svm(y ~., data = df_fat_train , probability = T)
 summary(SVMbasico)
 #plot(SVMbasico, df_1_1_train)
 predsvm1 <- predict(SVMbasico, newdata=subset (df_fat_test, select = -c(y)))
@@ -163,38 +172,87 @@ confsvmbasico
 #rocpredsvmlin<- prediction(predictions = predsvm1, labels = df_fat_test$y )
 
 
+x.svm.prob <- predict(SVMbasico,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+x.svm.prob.rocr <- prediction(attr(x.svm.prob, "probabilities")[,2], df_fat_test$y )
+x.svm.perf <- performance(x.svm.prob.rocr, "tpr","fpr")
+plot(x.svm.perf, colorize = TRUE)#, add=TRUE
+
+
+resultados <- Salvametricas("SVM LInear simples",
+                            matconfusion = confsvmbasico,
+                            perform = x.svm.prob.rocr)
+resultados
+
+
 ######## SVM utilizando um tune
 
 tunesvm<- tune(svm, 
                train.x = subset (df_fat_test, select = -c(y)),
                train.y = df_fat_test$y,
-               ranges = list(cost=10^(-1:2), gamma=c(0.5, 1,2))
+               ranges = list(cost=10^(-1:2))
                )
 print(tunesvm)
-SVMtune <- svm(y ~., data = df_fat_train,  cost=tunesvm$best.parameters[1], gamma= tunesvm$best.parameters[2])
+#coste =10
+SVMtune <- svm(y ~., data = df_fat_train,  cost=tunesvm$best.parameters[1], probability =  T)
 predsvm2 <- predict(SVMtune, newdata=subset (df_fat_test, select = -c(y)))
 confsvmtune1<- confusionMatrix(predsvm2,df_fat_test$y)
 confsvmtune1
 
+## Curva roc e salvando resultados
+x.svm.prob1 <- predict(SVMtune,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+x.svm.prob.rocr1 <- prediction(attr(x.svm.prob1, "probabilities")[,2], df_fat_test$y )
+x.svm.perf <- performance(x.svm.prob.rocr1, "tpr","fpr")
+plot(x.svm.perf, colorize = TRUE)#, add=TRUE
+
+
+resultados <- Salvametricas("SVM com custo = 10",
+                            matconfusion = confsvmtune1,
+                            perform = x.svm.prob.rocr1)
+resultados
+
 ####### SVM utilizando um kernelpolinomial d egrau 2
 
-SVMpoly2 <- svm(y ~., data = df_fat_train, kernel= "polynomial",degree=2 )
+SVMpoly2 <- svm(y ~., data = df_fat_train, kernel= "polynomial",degree=2, probability= T )
 predsvm3 <- predict(SVMpoly2, newdata=subset (df_fat_test, select = -c(y)))
 confsvmpoly2<- confusionMatrix(predsvm3,df_fat_test$y)
 confsvmpoly2
 
+## Curva roc e salvando resultados
+x.svm.prob2 <- predict(SVMpoly2,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+x.svm.prob.rocr2 <- prediction(attr(x.svm.prob2, "probabilities")[,2], df_fat_test$y )
+x.svm.perf <- performance(x.svm.prob.rocr2, "tpr","fpr")
+plot(x.svm.perf, colorize = TRUE)#, add=TRUE
+
+
+resultados <- Salvametricas("SVM plinomial grau 2",
+                            matconfusion = confsvmpoly2,
+                            perform = x.svm.prob.rocr2)
+resultados
 
 ####### SVM utilizando um kernelpolinomial de grau 3
 
-SVMpoly3 <- svm(y ~., data = df_fat_train, kernel= "polynomial",degree=3 )
+SVMpoly3 <- svm(y ~., data = df_fat_train, kernel= "polynomial",degree=3, probability= T )
 predsvm4 <- predict(SVMpoly3, newdata=subset (df_fat_test, select = -c(y)))
 confsvmpoly3<- confusionMatrix(predsvm4,df_fat_test$y)
 confsvmpoly3
 
+## Curva roc e salvando resultados
+x.svm.prob3 <- predict(SVMpoly3,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+x.svm.prob.rocr3 <- prediction(attr(x.svm.prob3, "probabilities")[,2], df_fat_test$y )
+x.svm.perf <- performance(x.svm.prob.rocr3, "tpr","fpr")
+plot(x.svm.perf, colorize = TRUE)#, add=TRUE
+
+
+resultados <- Salvametricas("SVM plinomial grau 3",
+                            matconfusion = confsvmpoly3,
+                            perform = x.svm.prob.rocr3)
+resultados
+
+
 
 
 ### Vamos entar fixar o custo do svm com kernel de grau 3
-
+### Não compensoou por
 tuneply3<- tune(svm, 
                train.x = subset (df_fat_test, select = -c(y)),
                train.y = df_fat_test$y,
@@ -203,30 +261,90 @@ tuneply3<- tune(svm,
                ranges = list(cost=10^(-1:2))
 )
 print(tuneply3)
-
-SVMpoly3.1 <- svm(y ~., data = df_fat_train, kernel= "polynomial",degree=3, cost=tuneply3$best.parameters[1] )
+## Custo 1
+SVMpoly3.1 <- svm(y ~., data = df_fat_train, kernel= "polynomial",degree=3, cost=tuneply3$best.parameters[1], probability = T )
 predsvm5 <- predict(SVMpoly3.1, newdata=subset (df_fat_test, select = -c(y)))
 confsvmpoly3.1<- confusionMatrix(predsvm5,df_fat_test$y)
 confsvmpoly3.1
 
 
+x.svm.prob3.1 <- predict(SVMpoly3.1,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+x.svm.prob.rocr3.1 <- prediction(attr(x.svm.prob3.1, "probabilities")[,2], df_fat_test$y )
+x.svm.perf <- performance(x.svm.prob.rocr3.1, "tpr","fpr")
+plot(x.svm.perf, colorize = TRUE)#, add=TRUE
+
+
+#resultados <- Salvametricas("SVM plinomial grau 3 e custo 1",
+#                            matconfusion = confsvmpoly3.1,
+#                            perform = x.svm.prob.rocr3.1)
+#resultados
+
+
 ##################### Por ultimo, vamos tentar um SVM com o kernel radial
-SVMrad <- svm(y ~., data = df_fat_train, kernel= "radial")
-predsvm6 <- predict(SVMrad, newdata=subset)
+SVMrad <- svm(y ~., data = df_fat_train, kernel= "radial", probability = T)
+predsvm6 <- predict(SVMrad, newdata=subset (df_fat_test, select = -c(y)))
 confsvmrad<- confusionMatrix(predsvm6,df_fat_test$y)
 confsvmrad
+
+
+## Curva roc e salvando resultados
+x.svm.prob6 <- predict(SVMrad,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+x.svm.prob.rocr6 <- prediction(attr(x.svm.prob6, "probabilities")[,2], df_fat_test$y )
+x.svm.perf <- performance(x.svm.prob.rocr6, "tpr","fpr")
+plot(x.svm.perf, colorize = TRUE)#, add=TRUE
+
+
+resultados <- Salvametricas("SVM radial",
+                            matconfusion = confsvmrad,
+                            perform = x.svm.prob.rocr6)
+resultados
+
 
 ########################################################################
 ######################## Análise discriminante #########################
 ########################################################################
 
+############################## Linear  #################################
 
 
 
+fit <- lda(y ~., data = df_fat_train)
+#fit
+preddisc <- predict(fit, newdata=subset (df_fat_test, select = -c(y)), type="response")
+confdisc<- confusionMatrix(preddisc$class,df_fat_test$y)
+confdisc
+## Curva roc e salvando resultados
+#x.svm.prob7 <- predict(fit,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+
+pred <- prediction(preddisc$posterior[,2], df_fat_test$y) 
+perf <- performance(pred,"tpr","fpr")
+plot(perf,colorize=TRUE)
+
+resultados <- Salvametricas("análise discriminante Lienar",
+                            matconfusion = confdisc,
+                            perform = pred)
+resultados
 
 
+############################## Linear  #################################
 
 
+fit <- qda(y ~., data = df_fat_train)
+#fit
+preddisc <- predict(fit, newdata=subset (df_fat_test, select = -c(y)), type="response")
+confdisc<- confusionMatrix(preddisc$class,df_fat_test$y)
+confdisc
+## Curva roc e salvando resultados
+#x.svm.prob7 <- predict(fit,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
+
+pred <- prediction(preddisc$posterior[,2], df_fat_test$y) 
+perf <- performance(pred,"tpr","fpr")
+plot(perf,colorize=TRUE)
+
+resultados <- Salvametricas("análise discriminante Lienar",
+                            matconfusion = confdisc,
+                            perform = pred)
+resultados
 
 
 
@@ -236,7 +354,7 @@ naiveb <- naive_bayes(y ~., data = df_fat_train)
 #3plot(naiveb)
 
 
-predict(naiveb,  subset(df_fat_test, select = -c(y)), type = 'prob')#,  usekernel =  T
+p2<- predict(naiveb,  subset(df_fat_test, select = -c(y)), type = 'prob')#,  usekernel =  T
 #head(cbind(p, df_test))
 prednaive <- predict(naiveb,subset(df_fat_test, select = -c(y)))
 
@@ -244,66 +362,15 @@ confnaive <- confusionMatrix(prednaive,df_fat_test$y)
 confnaive
 
 
+pred <- prediction(p2[,2], df_fat_test$y) 
+perf <- performance(pred,"tpr","fpr")
+plot(perf,colorize=TRUE)
 
-
-
-
-########################################
-conflog
-
-confarvore
-
-confnaive
-
-
-## Acurácia
-## PRecisão -- pos Pred Value e Neg Pred Value
-## AUC 
-## Detection Rate
-(auc_ROCR <- auc_ROCR@y.values[[1]])
-
-roc_perflog 
-(auc_ROCR <- performance(rocpredlog, measure = "auc"))
-(auc_ROCR <- auc_ROCR@y.values[[1]])
-
-
-auc_ROCR@y.values[[1]]
-
-
-resultados <- data.frame("Acurácia" = numeric(0),
-                         "Pos pred" = numeric(0),
-                         "Pos neg" = numeric(0),
-                         "AUC" = numeric(0)
-                         )
-
-
-
-
-
-
-
-Salvametricas <- function( matconfusion , perform, resul = resultados){
-  #### CAulculando a AUC
-  roc_perflog <- performance(perform , "tpr" , "fpr")
-  (auc_ROCR <- performance(rocpredlog, measure = "auc"))
-  (auc_ROCR <- auc_ROCR@y.values[[1]])
-  ### linha ja existentes
-  n <- nrow(resul)
-  ### ERscrevendono data frame
-  resul[n+1,] <- c(
-    conflog$overall['Accuracy'],
-    conflog$byClass['Pos Pred Value'],
-    conflog$byClass['Neg Pred Value'],
-    auc_ROCR
-  )
-  return(resul)
-}
-
-resultados = Salvametricas("Regessão Logística",matconfusion = conflog, perform = rocpredlog)
+resultados <- Salvametricas("Naive Bayes",
+                            matconfusion = confnaive,
+                            perform = pred)
 resultados
 
 
 
-
-#######################################################
-
+########################################
