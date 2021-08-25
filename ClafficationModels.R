@@ -3,6 +3,8 @@
 ##############################################################################
 library(tidyverse)
 library(caret)
+
+library(yardstick)
 library(randomForest)
 library(ROCR)
 library(e1071)
@@ -126,6 +128,11 @@ resultados <- Salvametricas("Regessão Logística",
               perform = rocpredlog)
 
 resultados
+
+
+#saveRDS(mod, "modeloLogistico.rds")
+#mod <- readRDS("modeloLogistico.rds")
+
 ########################################################################
 ########################### Random Florest #############################
 ########################################################################
@@ -326,28 +333,6 @@ resultados <- Salvametricas("análise discriminante Lienar",
 resultados
 
 
-############################## Linear  #################################
-
-
-fit <- qda(y ~., data = df_fat_train)
-#fit
-preddisc <- predict(fit, newdata=subset (df_fat_test, select = -c(y)), type="response")
-confdisc<- confusionMatrix(preddisc$class,df_fat_test$y)
-confdisc
-## Curva roc e salvando resultados
-#x.svm.prob7 <- predict(fit,type = "prob", newdata=subset (df_fat_test, select = -c(y)), probability =  T)
-
-pred <- prediction(preddisc$posterior[,2], df_fat_test$y) 
-perf <- performance(pred,"tpr","fpr")
-plot(perf,colorize=TRUE)
-
-resultados <- Salvametricas("análise discriminante Lienar",
-                            matconfusion = confdisc,
-                            perform = pred)
-resultados
-
-
-
 ########################## Naive bayes ####################
 
 naiveb <- naive_bayes(y ~., data = df_fat_train)
@@ -374,3 +359,18 @@ resultados
 
 
 ########################################
+
+plotamatriz <- function(matriz){
+mat<- matriz$table %>% 
+    as.data.frame() %>%
+    ggplot(aes(x = Prediction, y= Reference, fill= Freq))+
+      geom_tile()+
+      coord_equal() +
+      scale_fill_distiller(palette="Blues", direction=1) +
+      geom_text(aes(label=Freq), color="black")+
+      theme_minimal()
+  return(mat)
+}
+mat<- plotamatriz(conflog)
+mat
+#data.frame("predito" = prednaive, "real" =df_fat_test$y)
