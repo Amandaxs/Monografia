@@ -1,0 +1,173 @@
+A Análise de sobrevivência, também conhecida como análise de sobrevida é o conjunto de técnicas que tem como interesse o tempo até a ocorrência de um determinado evento. Podemos estar interessados no efeito de algum tratamento no tempo de recuperação de um paciênte, ou de reincidência de uma doença, e embora estas técnicas sejam muito exploradas na área da saúde, sua aplicação não é exclusiva deste setor. Neste trabalho, a análise de sobrevivência será utilizada para predizer o tempo até que um devedor pague pelo menos 80\% de sua dívida.
+
+Se o objetivo é estudar o tempo até a ocorrência de um evento, é natural pensar que os usuais modelos de regressão seriam uma boa abordagem para a análise. No entanto a análise d esobrevivência leva em consideração características que os modelos convencionais não aborda. A principal delas é a presença de censura nos dados.  Uma censura pode ser considerada como uma observação parcial do evento de interesse, isso quer dizer que temos alguma informação sobre o tempo, mas que o evento de interesse não foi observado.
+
+Segundo \cite{sobrevivencia} mesmo censurados, todos os resultados de um estudo de sobrevivência devem ser mantidos na análise, pois  mesmo incompletas, ainda são informações sobre o tempo e a omissão da censura pode acarretar em conclusões viciadas.
+
+Existem diversos tipos de censura, que podem acontecer por diversos motivos, O principais conceitos de censura são listados a seguir:
+
+
+
+\begin{itemize}
+  \item \textbf{Censura do tipo I:} É observada quando o período de observação que foi previamente definido.
+  \item \textbf{Censura do tipo II:} Ocorre quando o período de tempo não foi fixado, mas ele termina após uma determinada quantidade de observações do evento de interesse.
+  \item \textbf{Censura aleatória:} Acontece quando deixamos de ter informações de um indivíduo por razões não ligadas ao evento de interesse.
+  \item \textbf{Censura a direita:} Após o fim do período observado o evento de interesse ainda não foi observado.
+  \item \textbf{Censura a esquerda:} O evento de interesse ocorreu antes do início da observação.
+  \item \textbf{Censura intervalar:} Não se sabe o momento exato em que o evento de interesse ocorreu, mas sabe-se o intervalo de tempo desta ocorrêcia.
+
+\end{itemize}
+
+
+Ourta característica é o truncamento, que ocorre quandoindivíduos deixam de ser incluídos no estudo por motivos relaciondos ao evento de interesse.
+
+Devido a comumprsença de censura nos dados de sobrevivência, a representação deles é dada através do par ($\emph{t}_i, \delta_i$) , onde \emph{i} (\emph{i} = 1,...,n) representa o indíviduo sob estudo,  $\emph{t}_i$ representa o tempo de falha do iésimo indivíduo e $\delta_i$ é uma variável indicadora de censura definida da seguinte forma:
+
+$
+\delta_i = 
+\begin{cases}
+
+             1 & \mbox{se } \emph{t}_i \mbox{ é um tempo de observação do evento de interesse}\\
+
+             0 & \mbox{se } \emph{t}_i \mbox{ é um tempo de censurado}\
+
+       \end{cases}
+$
+
+O tempo até a ocorrência do evento de interesse (T) costuma ser especificado pela função de sobrevivência  e/ou pela função de risco (ou de taxa de falha).
+
+A função de sobrevivência é a probabilidade d eobservar o evento de interesse até um tempo \emph{t}, e pode ser expressa como: 
+
+\begin{equation}\label{eq:func_sobrevivencia}
+S(\emph{t}) = P(T \geq \emph{t})
+\end{equation}
+
+A probabilidade do evento de interesse ocorrer em um intervalo de tempo [\emph{$t_i$}, \emph{$t_j$}, $i \geq j$) pode ser expressa em relação a função de sobrevivência da seguinte forma:  S(\emph{$t_i$}) - S(\emph{$t_j$}). A taxa de falha neste intervalo  é a probabilidade do evento de interesse ocorrer no intervalo dado que ele não ocorreu antes do tempo \emph{$t_i$}, e pode ser expressa da seguinte forma:
+
+\begin{equation}\label{eq:func_risco}
+\lambda(t) = \frac{ S(t_i) - S(t_j)}{\Delta t S(t)} = \frac{f(t)}{S(t)}
+\end{equation}
+
+As principais técnicas para modelagem de dados de sobrevivência são mostradas a seguir:
+
+\subsubsection{Kaplan-Meier}
+
+Na ausência de censuras, uma estimativa intuitiva para a função de risco é dada por:
+
+\begin{equation}\label{eq:risk_no_censura}
+\hat{\lambda}([t_i, t_j)) = \frac{ \mbox{número de Ocorrências no período } [t_i, t_j)}{\mbox{número não ocorrências até \emph{t} = i }}
+\end{equation}
+
+Ainda no cenário com ausência de censura, a função de sobrevivencia é dada por:
+
+\begin{equation}\label{eq:surv_no_censura}
+\hat{S}(t) = \frac{ \mbox{número não ocorrências até \emph{t} = i }}{\mbox{número total de observados}}
+\end{equation}
+
+o estimador de Kaplan-Meier, também conhecido como limite-produto é uma adaptação dos estimadores definidos em \ref{eq:risk_no_censura} e \ref{eq:surv_no_censura}. No entanto enquanto estes estimadores tem n intervalos, sendo n o tamanho da amostra, no estimador de Keplan-Meier o número de intervalor é definido pela qunatidade de observações do evento de interesse (k).
+
+
+A função de sobrevivência definida por Keplan-Meier faz uma pequena modificação na função de sobrevivência definida em \ref{eq:surv_no_censura} e passa a passa a considerar os casos onde houveram censura, passando a considerar como a probabilidade da observação ocorrer no intervalo [$t_{j-1}$,$t_j$) como:
+
+\begin{equation}\label{eq:qq}
+\hat{q}_j = \frac{ \mbox{número não ocorrências até \emph{t} = i }}{\mbox{número de observações sob risco em } t_{j-1}}
+\end{equation}
+
+para j = 1,...,k.
+
+A construção do estimador é dada através de uma sequência de passos dependentes, e que podem ser escritos em termos de probabilidade condicional:
+
+\begin{equation}\label{eq:keplan}
+\hat{S}(t_j) = (1-q_1)(1-q2)...(1-q_j) = \prod_{j: t_j < t}(1-q_j) = \prod_{j: t_j < t}(1- \frac{d_j}{n_j})
+\end{equation}
+
+Onde podemos definir:
+
+\begin{itemize}
+
+\item $t_1 < t_1 < ... < t_k$  como os k tempos distintos de obsevação ordenados.
+\item $d_j$ como o número de observação em $t_j$, j= 1,...,k.
+\item $n_j$ como o número de indivídos sob risco no intervalo $t_j$, ou seja, o número de indivíduos que não observaram o evento de interesse e nem foram censurados até o instante imediatamente anterios a $t_j$.
+
+\end{itemize}
+
+A função taxa da falaha poderá ser calculada a partir da função do sobrevivência, conforme é mostrado em \ref{eq:func_risco}.
+
+
+\subsubsection{Modelos Probabilísticos:}
+
+Os estimadores de Kaplan-Meier são modelos não paramétricos, ou seja, não assumem nenhuma distribuição para modelar as funções de sobrevivência. Outra abordagem é utilizar alguma distribuição de probabilidades para o tempo.
+
+
+Pode-se utilizar diversas distribuições, sendo as mais comuns as distribuições exponencial, Weibull, Log-normal e Gama. Cada distribuição tem suas particularidades, e o uso delas deve considerar isto. 
+
+Tendo definido uma distribuição de probabilidades que descreva bem o tempo até a ocorrência do evento, pode-se definir as funções de Sobrevivência e risco com base nestas distribuições. No caso da distribuição exponencial, por exemplo, o tempo até ocorrência do evento de interesse é modelado pela função densidade exponencial:
+
+\begin{equation}\label{eq:densexp}
+f(t) = \frac{1}{\alpha} exp\big\{- \left(\frac{t}{\alpha}\right)\big\} ,  t \geq 0 
+\end{equation}
+
+onde o parâmetro $\alpha$ é o tempo médio de vida, na mesma unidade de tempo utilizada. Neste caso, teremos a função so bcrevivência dada por:
+
+\begin{equation}\label{eq:expsurv}
+S(t) = exp\big\{- \left(\frac{t}{\alpha}\right)\big\} 
+\end{equation}
+
+e a função de falha seria dada por:
+
+\begin{equation}\label{eq:expffalha}
+\lambda(t) = \frac{1}{\alpha}
+\end{equation}
+
+
+Para as outras distribuições o procedimento é o mesmo, basta definir uma distriuição para o tempo e definir as funç~eos com base nesta distribuição.
+
+
+
+\subsubsection{Modelos de tempo de vida acelerado:}
+
+Os modelos de tempo de vida acelerado,nos permitem incluir covariáveis que irão acelarar o desacelerar o tempo até ocorrência do evento. Estes modelos são mais eficientes, no entento menos flixiveis por dependerem de distribuições de probabildiade.
+
+Tais modelos tem a seguinte forma:
+
+
+\begin{equation}\label{eq:Acelerado}
+T = log(T) = \beta_0 + \beta_1 x_1 + ... + \beta_p x_p = X \beta + \sigma \nu
+\end{equation}
+
+A relação das covariáveis com o tempo fica mais explicita e pode ser melhor compreendida ao usarmos a escala original:
+
+
+\begin{equation}\label{eq:Aceleradosemlog}
+T = exp \{ X \beta\} exp \{ X \sigma \nu \} 
+\end{equation}
+
+
+A entre os diferentes modelos de tempo de vida acelerado,  está na distribuição que consideramos para T ou para $\nu$ que é o componente estocástico da equação. Alguns exemplos de distribuições que podem ser adotadas, são as distribuições são as distribuições, weibull, log-normal e gama.
+A estimação dos coeficientes é feita via método de máxima verossimilhança. Nos dados de sobrevivência, devemos considerar os dados censurados, o que faz com que a função de verossimilhança não seja construida da maneira usual. Para este caso as n observações são dividas em duas partes, uma referente aos dados que observaram o evento de interesse (r) e outra referente aos dados censurados (n-r). A contribuição da parte que observou o evento de interesse, é sua funçaõ de densidade, e a contribuição da parte censurada é dada pela função de sobrevivência, fazendo com a que funçaõ de verossimilhança assuma o seguinte formato:
+
+
+\begin{equation}\label{eq:Verossimil_Survival}
+T = \prod_{i=1}^{r} f(t_i;\theta)  \prod_{i=r+1}^{n} S(t_i;\theta)
+\end{equation}
+
+Tendo contruuido a função de  verossimilhança, basta utilizar metodos de maximização para encontrar os parâmetros.
+
+
+\subsubsection{Modelos de riscos proporcionais de Cox:}
+
+Um outro modelo que nos permite inlcuir covariáveis para explicar o tempo até a ocorrência de um evento d eitneresse, é o modelo de riscos proporcionais de Cox. Uma das principais vantagens do modelo de Cox é que não é nescessário escolher uma distribuição de probabilidades para o tempo.
+
+A principal suposiçaõ do modelo é de que a a razão das taxas de falha é constante ao longo do tempo. Isso quer dizer que se um indivíduo tem risco 5 vezes maios que o outro no começo do período observado, espera-se que essa razão se mantenha ao lingo do tempo.
+
+A equação deste modelo é escrita em torno de sua função de risco:
+
+
+
+\begin{equation}\label{eq:CoxReg}
+\lambda(t) = \lambda_0(t) g(x'\beta )
+\end{equation}
+
+Sendo \textbf{x} o vetor de covariáveis.
+
+No artigo em que este modelo é apresentado, \cite{CoxArtigo}, um ou outro conceito importante é apresentado. O conceito de verossimilhança parcial.

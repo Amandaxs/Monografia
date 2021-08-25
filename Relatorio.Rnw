@@ -11,11 +11,14 @@
 %\usepackage{hyperref} 
 \usepackage{caption}
 \usepackage{natbib}
+\usepackage{notoccite}
+%\usepackage[backend=biber]{biblatex}
+%\addbibresource{teste.bib}
 \bibliographystyle{apalike}
 \usepackage{amsmath} %% chaves duplas
 \usepackage{bm}
 \usepackage{color}
-%\usepackage{apalike}
+\usepackage{apalike}
 %\usepackage{abntcite}
 \usepackage{indentfirst} % para as primeiras linhas ficarem com
 %\usepackage[alf, abnt-emphasize=bf]{abntcite}
@@ -23,7 +26,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cabeçalho
-\title{Collection scoring via técnicas de Machine Learning} % titulo
+\title{Collection scoring via técnicas de \emph{Machine Learning}} % titulo
 \author{Amanda Xavier} % autor
 
 
@@ -32,6 +35,7 @@
 %5\bibliographystyle{apalike}
 \begin{document}
 \SweaveOpts{concordance=TRUE}
+%\SweaveOpts{concordance=TRUE}
 
 
 
@@ -82,6 +86,9 @@
 %%%%%%%%%%%
 \subsection{Avaliação de modelos de classificação}
 
+
+\subsection{Análise de sobrevivência}
+\SweaveInput{teorical/Survival.Rnw}
 %%%%%%%%%%%
 %\subsection{Avaliação de modelos de tempo **** Melhorar esse nome}
    
@@ -92,10 +99,19 @@
 %%%%%%%%%%%%% Simulação dos dados
 \section{Simulação e tratamento dos dados} % criando seção dentro do capítulo
 \SweaveInput{simulacao.Rnw}
+
+
+\section{ajuste dos Modelos}
+
+\subsection{Classificação}
+
+\subsection{Sobrevivência}
+
+
+\nocite{*}
 %\cite{rstudio}
-
-
-%\bibliography{teste}
+%\bibliographystyle{ieeetr}
+\bibliography{ref}
 
 
 \end{document}
